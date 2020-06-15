@@ -28,20 +28,32 @@ function displayMessages() {
     });
 }
 
-//creating event on click to push new li to the list
+
+function addItem() {
+    if(!addMessage.value) return;
+    let newToDo = {
+        todo: addMessage.value,
+        checked:false,
+        important:false
+    };
+
+    toDoList.push(newToDo);
+    displayMessages();
+    localStorage.setItem('todo', JSON.stringify(toDoList));
+    addMessage.value = '';
+}
+
+
+//creating event on click or enter to push new li to the list
 
 addButton.addEventListener('click', () => {
-        if(!addMessage.value) return;
-        let newToDo = {
-            todo: addMessage.value,
-            checked:false,
-            important:false
-        };
+    addItem();
+});
 
-        toDoList.push(newToDo);
-        displayMessages();
-        localStorage.setItem('todo', JSON.stringify(toDoList));
-        addMessage.value = '';
+addButton.addEventListener('keydown', KeyboardEvent => {
+    if (KeyboardEvent.enter) {
+        addItem();
+    }
 });
 
 //creating separate part for each li
